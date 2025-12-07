@@ -1,10 +1,12 @@
-files := $(shell find . -name '*.hpp')
 BUILD_DIR = ./build
 
-CXXFLAGS= -fPIC -shared
+CXXFLAGS= -fPIC -c
 
-$(BUILD_DIR)/libzio.so: $(files) $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) $(files) -o $@
+$(BUILD_DIR)/libzio.so: ziolib.hpp $(BUILD_DIR)
+	cp $< ziolib.cpp
+	$(CXX) $(CXXFLAGS) ziolib.cpp -o $(BUILD_DIR)/lib.o
+	$(CXX) -shared -o $@ $(BUILD_DIR)/lib.o
+	rm ziolib.cpp
 
 $(BUILD_DIR):
 	mkdir -p $@
