@@ -1,5 +1,5 @@
 <div id="header" align="center">
-  <h1>ziolib</h1>
+  <h1> ziolib </h1>
   <h3>TUI library in C++ (ncurses-based)</h3>
 </div>
 
