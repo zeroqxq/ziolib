@@ -4,6 +4,8 @@
 #include <vector>
 #include <termios.h>
 #include <unistd.h>
+#include <stdexcept>
+
 
 #define LEFT    -1111
 #define CENTER  -2222
@@ -31,13 +33,22 @@ inline void setlocale(const char* loc = "") noexcept {
 }
 
 class Screen {
+private:
+    inline static bool initialized = false;
 public:
-    Screen()  { 
+    Screen()  {
+        if (initialized) {
+            throw std::runtime_error("zio::Screen already initialized");
+        }
+
+        initialized = true;
+
         initscr(); 
         cbreak(); 
         noecho(); 
         keypad(stdscr, TRUE); 
         curs_set(0);
+
         if (has_colors()) { 
             start_color(); 
             use_default_colors(); 
